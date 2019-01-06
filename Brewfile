@@ -1,39 +1,45 @@
-tap "homebrew/core"
+tap "d12frosted/emacs-plus"
 tap "homebrew/bundle"
-tap "caskroom/drivers"
-tap "caskroom/fonts"
-tap "caskroom/cask"
-cask "java"
-brew "dark-mode"
+tap "homebrew/cask"
+tap "homebrew/cask-drivers"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
+brew "duti"
+brew "emacs-plus"
 brew "fish"
 brew "git"
-brew "gradle"
 brew "mackup"
 brew "mas"
+brew "mkvtoolnix"
 brew "node"
+brew "python"
+brew "ruby"
+brew "ssh-copy-id"
+brew "the_silver_searcher"
+brew "tldr"
 brew "vim"
 brew "wget"
+cask "aerial"
 cask "alfred"
-cask "amazon-chime"
+cask "balenaetcher"
+cask "docker"
 cask "dropbox"
-cask "google-backup-and-sync"
+cask "font-roboto"
+cask "font-roboto-mono"
+cask "font-roboto-mono-for-powerline"
 cask "google-chrome"
-cask "intellij-idea"
+cask "iina"
 cask "iterm2"
+cask "java"
+cask "karabiner-elements"
+cask "postman"
+cask "scroll-reverser"
 cask "spotify"
 cask "sublime-text"
-cask "transmission"
-cask "caskroom/drivers/logitech-options"
-cask "caskroom/fonts/font-roboto"
-cask "caskroom/fonts/font-roboto-mono"
-cask "caskroom/fonts/font-roboto-mono-for-powerline"
+cask "typora"
+mas "Amphetamine", id: 937984704
 mas "BetterSnapTool", id: 417375580
-mas "Boxy", id: 1053031090
-mas "Chatty", id: 981117463
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "Keynote", id: 409183694
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "Telegram Desktop", id: 946399090
+mas "Telegram", id: 747648890
+mas "TickTick", id: 966085870
 mas "Trello", id: 1278508951
+
