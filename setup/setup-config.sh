@@ -74,8 +74,7 @@ sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo Hos
 #
 # Prevent app relaunch on restart (https://apple.stackexchange.com/a/253609)
 #
-if test -n "$(find . -maxdepth 1 -name 'glob*' -print -quit)"; then
-    sudo sh -c '> ~/Library/Preferences/ByHost/com.apple.loginwindow*'
+if test -n "$(find ~/Library/Preferences/ByHost/ -maxdepth 1 -name 'com.apple.loginwindow*' -print -quit)"; then
     sudo chown root ~/Library/Preferences/ByHost/com.apple.loginwindow*
     sudo chmod 000 ~/Library/Preferences/ByHost/com.apple.loginwindow*
 fi
@@ -86,6 +85,16 @@ fi
 
 sudo pmset autorestart 1
 sudo systemsetup -setrestartfreeze on # restart on mac bsod
+
+
+#
+# Enable Safari dev tools
+#
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true && \
+defaults write com.apple.Safari IncludeDevelopMenu -bool true && \
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true && \
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true && \
+defaults write -g WebKitDeveloperExtras -bool true
 
 #
 # Terminal
