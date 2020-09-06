@@ -63,7 +63,6 @@ killall SystemUIServer
 if [ ! $IS_SETUP ]; then
 	echo "Opening apps"
 	open "/Applications/Alfred 4.app"
-	open /Applications/BetterSnapTool.app
 	open /Applications/Dropbox.app
 	open /Applications/Docker.app
 fi

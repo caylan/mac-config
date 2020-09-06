@@ -2,9 +2,10 @@
 alias dw="defaults write"
 alias dwg="defaults write -g"
 
+# References
 #
-# Defaults
-#
+# https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+# https://github.com/herrbischoff/awesome-macos-command-line
 
 # Close any open System Preferences panes
 osascript -e 'tell application "System Preferences" to quit'
@@ -17,6 +18,7 @@ dwg AppleKeyboardUIMode -int 3 # Enable full keyboard access on all controls (no
 dwg ApplePressAndHoldEnabled -bool false
 dwg InitialKeyRepeat -int 15
 dwg KeyRepeat -int 2
+dw /Library/Preferences/com.apple.loginwindow showInputMenu -bool false
 
 # Finder
 dw com.apple.finder NewWindowTarget -string "PfHm" # New window default location to ~
@@ -35,8 +37,10 @@ dw com.apple.desktopservices DSDontWriteUSBStores -bool true
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy list" ~/Library/Preferences/com.apple.finder.plist
 chflags nohidden ~/Library # show ~/Library
 
-# Mission Control
+# Mission Control/Dock
 dw com.apple.dock mru-spaces -bool false # don't automatically rearrange spaces
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock orientation "left"
 
 # Expand save panel by default
 dwg NSNavPanelExpandedStateForSaveMode -bool true
@@ -71,37 +75,36 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.serve
 dw com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName # Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window
 
-#
 # Prevent app relaunch on restart (https://apple.stackexchange.com/a/253609)
-#
 if test -n "$(find ~/Library/Preferences/ByHost/ -maxdepth 1 -name 'com.apple.loginwindow*' -print -quit)"; then
     sudo chown root ~/Library/Preferences/ByHost/com.apple.loginwindow*
     sudo chmod 000 ~/Library/Preferences/ByHost/com.apple.loginwindow*
 fi
 
-#
 # Power management
-#
-
 sudo pmset autorestart 1
 sudo systemsetup -setrestartfreeze on # restart on mac bsod
 
+# Trackpad: enable tap to click for this user and for the login screen
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-#
 # Enable Safari dev tools
-#
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true && \
-defaults write com.apple.Safari IncludeDevelopMenu -bool true && \
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true && \
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true && \
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
 defaults write -g WebKitDeveloperExtras -bool true
 
-#
 # Terminal
-#
-
-echo "Setting Fish as shell"
-sudo sh -c "grep -q -F fish /etc/shells || echo /usr/local/bin/fish >> /etc/shells"
-sudo chsh -s /usr/local/bin/fish $USER
-curl -L https://get.oh-my.fish > /tmp/omf-install
-fish /tmp/omf-install --noninteractive || true
+fish="/usr/local/bin/fish"
+if [ "$SHELL" == "$fish" ]; then
+    echo "Fish shell is already set"
+else
+    echo "Setting Fish as shell"
+    sudo sh -c "grep -q -F fish /etc/shells || echo /usr/local/bin/fish >> /etc/shells"
+    sudo chsh -s /usr/local/bin/fish $USER
+    curl -L https://get.oh-my.fish > /tmp/omf-install
+    fish /tmp/omf-install --noninteractive || true
+fi
